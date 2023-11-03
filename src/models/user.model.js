@@ -5,13 +5,13 @@ const bcrypt = require("bcryptjs");
 
 class User {
     static async getAll(limit, offset){
-        const sql = "SELECT * FROM usuarios LIMIT ? OFFSET ?";
+        const sql = "SELECT * FROM usuarios WHERE deleted = 0 LIMIT ? OFFSET ?";
         const results = await db.promise().query(sql, [limit, offset]);
         return results[0];
     }
 
     static async count(){
-        const sql = "SELECT COUNT(*) FROM usuarios";
+        const sql = "SELECT COUNT(*) FROM usuarios WHERE deleted = 0";
         const results = await db.promise().query(sql);
         return results[0][0]["COUNT(*)"];
     }
@@ -60,9 +60,20 @@ class User {
         return result[0][0];
     }
 
+    static async deleteUser(id){
+        const sql = "UPDATE usuarios SET deleted = 1 WHERE id = ?";
+        await db.promise().query(sql,[id],(err,results)=>{
+            if(err){
+                console.log(err);
+            }else{
+                console.log(results);
+            }
+        });
+    }
+
     static async encryptPassword(password){
         console.log(password);
-        const salt = await bcrypt.genSalt(10);
+        const salt = await bcrypt.genSalt(process.env.SALTOS_BCRYPT);
         return await bcrypt.hash(password,salt);
     }
 
