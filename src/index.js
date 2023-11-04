@@ -4,14 +4,12 @@ const express = require("express");
 const app = express();
 
 const PORT = process.env.PORT
-const usersRouter = require("./v1/routes/users.routes");
-const authRouter = require("./v1/routes/auth.routes");
+const usersRouter = require("./routes/users.routes");
+const authRouter = require("./routes/auth.routes");
 
-app.use(cors());
 app.use(express.json());
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/users", usersRouter);
-
+app.use("/v1/auth", authRouter);
+app.use("/v1/users", usersRouter);
 
 app.listen(PORT, () => {
   console.log("corriendo en el puerto " + PORT);

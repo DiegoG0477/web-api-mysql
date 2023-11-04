@@ -11,10 +11,10 @@ const verifyToken = async (req, res, next) => {
     }
 
     const decoded = await User.verifyToken(token);
-    req.userId = decoded.id;
+    req.usuario_id = decoded.id;
 
-    const user = User.findUser(req.userId);
-
+    const user = User.findById(req.usuario_id);
+    
     if (!user) {
       return res.status(404).json({
         message: "usuario no encontrado",

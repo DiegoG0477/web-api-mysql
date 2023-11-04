@@ -1,11 +1,12 @@
 {
-  "name": "linkjobs-api",
+  "name": "eduplanet-mysql-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js"
+    "start": "nodemon src/index.js",
+    "seed":"node ./src/seeders/users.seeder.js"
   },
   "author": "chuchoG",
   "license": "ISC",
